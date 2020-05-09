@@ -1,0 +1,15 @@
+.login {
+  display: flex;
+  height: inherit;
+  align-items: center;
+  justify-content: center; }
+
+.login_form {
+  display: block; }
+  .login_form input {
+    margin-bottom: 10px; }
+  .login_form button {
+    width: 100%; }
+
+html, body, #root, .app {
+  height: 100%; }

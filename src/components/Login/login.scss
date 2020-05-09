@@ -1,0 +1,21 @@
+.login {
+  display: flex;
+  height: inherit;
+  align-items: center;
+  justify-content: center;
+}
+.login_form {
+  display: block;
+
+  input {
+    margin-bottom: 10px;
+  }
+
+  button{
+    width: 100%;
+  }
+}
+
+html, body, #root, .app{
+  height: 100%;
+}
