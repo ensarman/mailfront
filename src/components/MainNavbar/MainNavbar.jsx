@@ -18,6 +18,9 @@ const MainNavbar = () => {
           <LinkContainer to="/userlist">
             <Nav.Link className="">Users</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/domains">
+            <Nav.Link className="">Domains</Nav.Link>
+          </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
