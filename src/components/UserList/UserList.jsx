@@ -25,7 +25,7 @@ const ALL_USERS = gql`
 `;
 
 const UserList = () => {
-  const { loading, error, data } = useQuery(ALL_USERS, {
+  const { loading, error, data, refetch } = useQuery(ALL_USERS, {
     fetchPolicy: "no-cache",
   });
 
@@ -39,59 +39,64 @@ const UserList = () => {
   };
 
   if (loading) return <Loading />;
-  if (error) {
+  else if (error) {
     return <ErrorNotification error={error} />;
-  }
+  } else {
+    return (
+      <Container className="my-4">
+        <NewUserModal
+          show={newUserShow}
+          setShow={setNewUserShow}
+          refetch={refetch}
+        />
+        <DeleteUserModal
+          show={deleteShow}
+          setShow={setDeleteShow}
+          userData={userData}
+          refetch={refetch}
+        />
 
-  return (
-    <Container className="my-4">
-      <NewUserModal show={newUserShow} setShow={setNewUserShow} />
-      <DeleteUserModal
-        show={deleteShow}
-        setShow={setDeleteShow}
-        userData={userData}
-      />
-
-      <Row className="mb-3">
-        <Col sm={3}>
-          <Button
-            variant="outline-primary"
-            onClick={() => setNewUserShow(true)}
-          >
-            Nuevo Usuario
-          </Button>
-        </Col>
-      </Row>
-      <Table hover className="table-sm">
-        <thead className="thead-dark">
-          <tr>
-            <th>id</th>
-            <th>Email</th>
-            <th>Domain</th>
-            <th>Quota</th>
-            <th>Password</th>
-            <th>Eliminar?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.allUsers.map((user) => (
-            <tr key={"key-" + user.id}>
-              <th>{user.id}</th>
-              <td>{user.email}</td>
-              <td>{user.domain.name}</td>
-              <td>{user.quota}</td>
-              <td>{user.password}</td>
-              <td align="center">
-                <p onClick={() => handleDeleteShow(user)}>
-                  <FontAwesomeIcon icon={["far", "trash-alt"]} />
-                </p>
-              </td>
+        <Row className="mb-3">
+          <Col sm={3}>
+            <Button
+              variant="outline-primary"
+              onClick={() => setNewUserShow(true)}
+            >
+              Nuevo Usuario
+            </Button>
+          </Col>
+        </Row>
+        <Table hover className="table-sm">
+          <thead className="thead-dark">
+            <tr>
+              <th>id</th>
+              <th>Email</th>
+              <th>Domain</th>
+              <th>Quota</th>
+              <th>Password</th>
+              <th>Eliminar?</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Container>
-  );
+          </thead>
+          <tbody>
+            {data.allUsers.map((user) => (
+              <tr key={"key-" + user.id}>
+                <th>{user.id}</th>
+                <td>{user.email}</td>
+                <td>{user.domain.name}</td>
+                <td>{user.quota}</td>
+                <td>{user.password}</td>
+                <td align="center">
+                  <p onClick={() => handleDeleteShow(user)}>
+                    <FontAwesomeIcon icon={["far", "trash-alt"]} />
+                  </p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Container>
+    );
+  }
 };
 
 export default UserList;

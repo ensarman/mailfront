@@ -20,6 +20,7 @@ const DeleteUserModal = (props) => {
         id: props.userData.id,
       },
     }).then(() => {
+      props.refetch();
       props.setShow(false);
     });
   };

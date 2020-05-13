@@ -48,6 +48,7 @@ const NewUserModal = (props) => {
         quota: event.target.quota.value,
       },
     }).then(() => {
+      props.refetch();
       props.setShow(false);
     });
   };
