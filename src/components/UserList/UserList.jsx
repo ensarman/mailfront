@@ -48,7 +48,7 @@ const UserList = () => {
       <NewUserModal show={newUserShow} setShow={setNewUserShow} />
       <DeleteUserModal
         show={deleteShow}
-        setShow={setNewUserShow}
+        setShow={setDeleteShow}
         userData={userData}
       />
 
