@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Button, Table } from "react-bootstrap";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import Loading from "../Loading/Loading";
 import ErrorNotification from "../ErrorNotification/ErrorNotification";
+import NewDomainModal from "./NewDomainModal/NewDomainModal";
 
 const ALL_DOMAINS = gql`
   query {
@@ -20,14 +21,17 @@ const ALL_DOMAINS = gql`
 `;
 
 const Domains = () => {
-  const { loading, error, data } = useQuery(ALL_DOMAINS);
+  const { loading, error, data, refetch } = useQuery(ALL_DOMAINS);
+
+  const [show, setShow] = useState(false);
 
   if (loading) return <Loading />;
   if (error) return <ErrorNotification error={error} />;
 
   return (
     <Container className="my-4">
-      <Button>Nuevo Usuario</Button>
+      <NewDomainModal show={show} setShow={setShow} refetch={refetch} />
+      <Button onClick={() => setShow(true)}>Nuevo Dominio</Button>
       <Table hover className="mt-3">
         <thead className="thead-dark">
           <tr>
@@ -39,7 +43,7 @@ const Domains = () => {
         <tbody>
           {data.allDomains.map((domain) => {
             return (
-              <tr>
+              <tr key={domain.id}>
                 <td>{domain.id}</td>
                 <td>{domain.name}</td>
               </tr>
